@@ -12,6 +12,8 @@ public class Journal
         "What memories did I make today that I will always remember?"
     };
     
+    
+    
     public void Write()
     {
         Entry ent = new Entry();
@@ -39,11 +41,11 @@ public class Journal
             ent.Display();
         }
     }
-
     
     public void Save(string filename)
     {
         filename.Trim();
+        
         using (StreamWriter outputFile = new StreamWriter(filename))
         {
             foreach (Entry ent in _entries)
@@ -61,8 +63,8 @@ public class Journal
             return;
         }
         
-
         filename.Trim();
+        
         try
         {
             string[] lines = System.IO.File.ReadAllLines(filename);

@@ -7,7 +7,7 @@ public class Entry
     public string _date;
     
     
-
+    
     public static Entry buildFromFile(string[] fileLine)
     {
         Entry ret = new Entry();
