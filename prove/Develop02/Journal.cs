@@ -43,6 +43,7 @@ public class Journal
     
     public void Save(string filename)
     {
+        filename.Trim();
         using (StreamWriter outputFile = new StreamWriter(filename))
         {
             foreach (Entry ent in _entries)
