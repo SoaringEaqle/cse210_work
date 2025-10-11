@@ -4,22 +4,23 @@ using System.IO;
 public class Journal
 {
     public List<Entry> _entries = new List<Entry>();
-    public List<string> _prompts = new List<string>() {
-        "Who was the most interesting person I interacted with today?",
+    public List<string> _prompts = new List<string>(){
+        "What was I most looking forward to today, and how did it turn out?",
         "What was the best part of my day?",
-        "How did I see the hand of the Lord in my life today?",
-        "What was the strongest emotion I felt today?",
-        "If I had one thing I could do over today, what would it be?"
+        "If I had one thing I could do over today, what would it be?",
+        "Who was the most interesting person I talked to today?",
+        "What memories did I make today that I will always remember?"
     };
-
-
+    
     public void Write()
     {
         Entry ent = new Entry();
-        ent._date = DateTime.Now.ToShortDateString();
+        DateTime dt = DateTime.Now;
+        ent._date = dt.ToShortDateString() + " " + dt.ToShortTimeString();
         ent._prompt = Prompt();
         ent._journal = Console.ReadLine();
         _entries.Add(ent);
+        Console.Write("Entry added");
     }
 
     public string Prompt()
@@ -40,9 +41,6 @@ public class Journal
     }
 
     
-    
-
-
     public void Save(string filename)
     {
         using (StreamWriter outputFile = new StreamWriter(filename))
@@ -52,16 +50,35 @@ public class Journal
                 outputFile.WriteLine(ent.toFileString());
             }
         }
+        Console.WriteLine($"Your journal has been saved to {filename}.");
     }
 
     public void Load(string filename)
     {
-        string[] lines = System.IO.File.ReadAllLines(filename);
-
-        foreach (string line in lines)
+        if (string.IsNullOrEmpty(filename))
         {
-            string[] split = line.Split("%!%");
-            _entries.Add(Entry.buildFromFile(split));
+            return;
+        }
+        
+
+        filename.Trim();
+        try
+        {
+            string[] lines = System.IO.File.ReadAllLines(filename);
+
+            foreach (string line in lines)
+            {
+                string[] split = line.Split("%!%");
+                _entries.Add(Entry.buildFromFile(split));
+            }
+            
+            Console.WriteLine("File successfully loaded.");
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine($"File \"{filename}\" cannot be found. Please try again.");
+            Console.Write("What is the filename? ");
+            Load(Console.ReadLine());
         }
     }
 }

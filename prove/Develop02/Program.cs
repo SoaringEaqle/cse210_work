@@ -10,13 +10,12 @@ class Program
         bool isSaved = true;
         
         
-        do
+        while(ask < 5)
         {
             Console.WriteLine("Please select an option:");
             Console.WriteLine("1. Write a new Entry\n2. Display your Journal Entries\n3. Load a Journal\n4. Save your Journal\n5. Quit program");
             Console.Write("Please select an option: ");
             ask = int.Parse(Console.ReadLine());
-
             if (ask == 1)
             {
                 journal.Write();
@@ -28,17 +27,18 @@ class Program
             }
             else if (ask == 3)
             {
-                Console.WriteLine("What is the Filename?");
+                Console.Write("What is the filename? ");
                 journal.Load(Console.ReadLine());
             }
             else if (ask == 4)
             {
-                Console.WriteLine("What is the Filename?");
+                Console.Write("What is the filename? ");
                 journal.Save(Console.ReadLine());
                 isSaved = true;
+                
             }
+            Console.WriteLine();
         } 
-        while (ask < 5);
 
         
         if (!isSaved)
@@ -51,6 +51,7 @@ class Program
                 case "true":
                 case "Yes" :
                 case "True":
+                case "TRUE":
                     yes = true;
                     break;
                 default:
@@ -63,5 +64,7 @@ class Program
                 journal.Save(Console.ReadLine());
             }
         }
+        
+        Console.WriteLine("You have successfully quit the journal\n\tThank You");
     }
 }
